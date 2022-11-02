@@ -26,12 +26,15 @@ exports.getListItems = async (req, res) => {
     try {
         const result = await Item.find({
             // createUser: req.userId 
-        }).select('_id itemName image price unit note')
+        }).select('_id createUser itemName image price unit note')
         .exec()
+
+        console.log(result)
 
         let mappedListItems = result.map(el => {
             return {
                 id: el._id,
+                createUser: el.createUser,
                 itemName: el.itemName,
                 image: el.image,
                 price: el.price,
@@ -55,7 +58,7 @@ exports.deleteItem = async (req, res) => {
     try {
         const result = await Item.deleteOne({
             _id: req.query.itemId, 
-            // createUser: req.userId
+            createUser: req.userId
         })
 
         console.log(result)

@@ -23,7 +23,7 @@ module.exports = function (app) {
         controller.deleteItem);
 
     app.post("/api/item/edit", 
-        // verifyToken, 
+        verifyToken, 
         controller.saveEditedItem);
 
 }

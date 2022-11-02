@@ -33,6 +33,7 @@ app.get("/", (req, res) => {
 
 require("./app/routes/user.routes")(app); 
 require("./app/routes/item.routes")(app);
+require("./app/routes/basket.routes")(app);
 
 const PORT = process.env.PORT || 8094; // set port, listen for requests
 app.listen(PORT, () => {
