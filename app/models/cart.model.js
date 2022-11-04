@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Basket = mongoose.model(
+const Cart = mongoose.model(
     'Basket',
     new mongoose.Schema({
         createUser: {
@@ -17,4 +17,4 @@ const Basket = mongoose.model(
     })
 )
 
-module.exports = Basket;
+module.exports = Cart;

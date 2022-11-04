@@ -1,18 +1,18 @@
 const db = require("../models");
-const Basket = db.basket;
+const Cart = db.cart;
 
-exports.addNewBasketItem = async (req, res) => {
+exports.addNewCartItem = async (req, res) => {
 
     try {
-        const basket = new Basket({
-            ...req.body.basket,
+        const cart = new Cart({
+            ...req.body.cart,
             createUser: req.userId, 
         });
 
-        const result = await basket.save();
+        const result = await cart.save();
 
             res.status(200).send({
-                message: "The basket item was created!",
+                message: "The cart item was added!",
             });
         }
 
@@ -21,15 +21,15 @@ exports.addNewBasketItem = async (req, res) => {
     }   
 }
 
-exports.getListBasketItems = async (req, res) => {
+exports.getListCartItems = async (req, res) => {
 
     try {
-        const result = await Basket.find({
+        const result = await Cart.find({
             createUser: req.userId 
         }).select('_id createUser itemName image price unit note quantity')
         .exec()
 
-        let mappedListBasketItems = result.map(el => {
+        let mappedListCartItems = result.map(el => {
             return {
                 id: el._id,
                 createUser: el.createUser,
@@ -43,7 +43,7 @@ exports.getListBasketItems = async (req, res) => {
         })
 
         res.status(200).send({
-            listItems: mappedListBasketItems,
+            listItems: mappedListCartItems,
         })
     }
 

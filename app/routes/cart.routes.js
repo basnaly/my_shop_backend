@@ -1,4 +1,4 @@
-const controller = require("../controllers/basket.controller");
+const controller = require("../controllers/cart.controller");
 const { verifyToken } = require("../middlewares/authJwt");
 
 module.exports = function (app) {
@@ -10,13 +10,13 @@ module.exports = function (app) {
 		next();
 	});
 
-    app.post("/api/basket/add", 
+    app.post("/api/cart/add", 
         verifyToken, 
-        controller.addNewBasketItem);
+        controller.addNewCartItem);
 
-    app.get("/api/basket/basket-items", 
-        verifyToken, 
-        controller.getListBasketItems);
+    // app.get("/api/Cart/cart-items", 
+    //     verifyToken, 
+    //     controller.getListCartItems);
 
     // app.delete("/api/item/delete-item", 
     //     verifyToken, 
