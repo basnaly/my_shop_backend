@@ -1,4 +1,4 @@
-const controller = require("../controllers/cart.controller");
+const controller = require("../controllers/order.controller");
 const { verifyToken } = require("../middlewares/authJwt");
 
 module.exports = function (app) {
@@ -10,12 +10,11 @@ module.exports = function (app) {
 		next();
 	});
 
-    app.post("/api/cart/update", 
+    app.post("/api/order/create-order", 
         verifyToken, 
-        controller.updateCart);
+        controller.createOrder);
 
-    app.get("/api/cart/cart-list", 
+    app.get("/api/order/list-orders", 
         verifyToken, 
-        controller.getCartList);
-
+        controller.getListOrders);
 }

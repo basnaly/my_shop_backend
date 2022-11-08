@@ -29,8 +29,6 @@ exports.getListItems = async (req, res) => {
         }).select('_id createUser itemName image price unit note')
         .exec()
 
-        console.log(result)
-
         let mappedListItems = result.map(el => {
             return {
                 id: el._id,
@@ -60,8 +58,6 @@ exports.deleteItem = async (req, res) => {
             _id: req.query.itemId, 
             createUser: req.userId
         })
-
-        console.log(result)
 
         if (result.deletedCount === 1) {
             res.status(200).send({

@@ -1,6 +1,7 @@
 const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.user;
+const Cart = db.cart;
 
 let jwt = require("jsonwebtoken");
 let bcrypt = require("bcryptjs");
@@ -14,7 +15,14 @@ exports.register = async (req, res) => {
 			password: bcrypt.hashSync(req.body.password, 8),
 		});
 
-        const result = await user.save();
+		const cart = new Cart({
+			listCartItems: [],
+			createUser: user.id
+		})
+
+		const resultUser = await user.save();
+
+        const resultCart = await cart.save();
 
 		let token = jwt.sign(
 			{ id: user.id, username: user.username, email: user.email },

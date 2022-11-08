@@ -1,35 +1,41 @@
 const db = require("../models");
 const Cart = db.cart;
 
-exports.addNewCartItem = async (req, res) => {
+exports.updateCart = async (req, res) => {
 
     try {
-        const cart = new Cart({
-            ...req.body.cart,
-            createUser: req.userId, 
-        });
+        const result = await Cart.updateOne({
+            // _id: req.query.itemId, 
+            createUser: req.userId
+        },
+        {
+            listCartItems: req.body.listCartItems,
+            createUser: req.userId
+        })
 
-        const result = await cart.save();
-
+        if (result.modifiedCount === 1) {
             res.status(200).send({
-                message: "The cart item was added!",
-            });
-        }
-
+                message: 'Item was updated!'
+            })
+        } else {
+            res.status(400).send({
+                message: 'Nothing was updated!'
+            })
+        }   
+    }
     catch(error) {
         res.status(500).send({ message: "Something went wrong" });
-    }   
+    }
 }
 
-exports.getListCartItems = async (req, res) => {
+exports.getCartList = async (req, res) => {
 
     try {
-        const result = await Cart.find({
+        const result = await Cart.findOne({
             createUser: req.userId 
-        }).select('_id createUser itemName image price unit note quantity')
-        .exec()
+        }).select('listCartItems').exec()
 
-        let mappedListCartItems = result.map(el => {
+        let mappedCartList = result.listCartItems.map(el => {
             return {
                 id: el._id,
                 createUser: el.createUser,
@@ -38,68 +44,21 @@ exports.getListCartItems = async (req, res) => {
                 price: el.price,
                 unit: el.unit,
                 note: el.note,
-                quantity: el.quantity
+                quantity: el.quantity,
+                total: el.total
             }
         })
 
         res.status(200).send({
-            listItems: mappedListCartItems,
+            listCartItems: mappedCartList,
         })
     }
 
     catch(error) {
+        console.log(error)
         res.status(500).send({ message: "Something went wrong" });
     }
 }
 
-// exports.deleteItem = async (req, res) => {
 
-//     try {
-//         const result = await Item.deleteOne({
-//             _id: req.query.itemId, 
-//             // createUser: req.userId
-//         })
-
-//         console.log(result)
-
-//         if (result.deletedCount === 1) {
-//             res.status(200).send({
-//                 message: 'The item was deleted!'})
-//         } else {
-//             res.status(500).send('Nothing was deleted!')
-//         }
-//     }
-
-//     catch(error) {
-// 		res.status(500).send({ message: "Something went wrong" });
-//     } 
-// }
-
-
-// exports.saveEditedItem = async (req, res) => {
-
-//     try {
-//         const result = await Item.updateOne({
-//             _id: req.query.itemId, 
-//             createUser: req.userId
-//         },
-//         {
-//             ...req.body.item,
-//             createUser: req.userId
-//         })
-
-//         if (result.modifiedCount === 1) {
-//             res.status(200).send({
-//                 message: 'Item was updated!'
-//             })
-//         } else {
-//             res.status(400).send({
-//                 message: 'Nothing was updated!'
-//             })
-//         }    
-//     }
-
-//     catch(error) {
-//         res.status(500).send({ message: "Something went wrong" });
-//     }
-// }
+ 
