@@ -7,6 +7,7 @@ const Item = mongoose.model(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
+        category: String,
         itemName: String,
         image: String,
         price: Number,
