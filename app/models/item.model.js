@@ -8,6 +8,7 @@ const Item = mongoose.model(
             ref: "User"
         },
         category: String,
+        outOfStock: Boolean,
         itemName: String,
         image: String,
         price: Number,

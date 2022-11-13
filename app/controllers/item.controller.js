@@ -26,7 +26,7 @@ exports.getListItems = async (req, res) => {
     try {
         const result = await Item.find({
             // createUser: req.userId 
-        }).select('_id createUser category itemName image price unit note')
+        }).select('_id createUser category outOfStock itemName image price unit note')
         .exec()
 
         let mappedListItems = result.map(el => {
@@ -34,6 +34,7 @@ exports.getListItems = async (req, res) => {
                 id: el._id,
                 createUser: el.createUser,
                 category: el.category,
+                outOfStock: el.outOfStock,
                 itemName: el.itemName,
                 image: el.image,
                 price: el.price,
