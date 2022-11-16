@@ -27,6 +27,9 @@ module.exports = function(app) {
 
     app.get("/api/user/check-user", 
     verifyToken, 
-    controller.sendUserEmail
-);
+    controller.sendUserEmail);
+
+    app.post("/api/user/save-address",
+    verifyToken,
+    controller.saveUserAddress)
 }

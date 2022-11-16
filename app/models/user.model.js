@@ -5,6 +5,13 @@ const User = mongoose.model(
         username: String,
         email: String,
         password: String,
+        address: {
+            city: String,
+            street: String,
+            buildNumber: String,
+            appartment: String,
+            phone: String,
+        },
     })
 );
 
