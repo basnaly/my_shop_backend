@@ -79,6 +79,7 @@ exports.login = async (req, res) => {
 			username: user.username,
 			email: user.email,
 			accessToken: token,
+			address: user.address
 		});
 	} catch (error) {
 		res.status(500).send({ message: "Something went wrong" });
