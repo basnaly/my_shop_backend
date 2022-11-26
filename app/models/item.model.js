@@ -14,6 +14,10 @@ const Item = mongoose.model(
         price: Number,
         unit: String,
         note: String,
+        discount: { 
+            discountAmount: Number, 
+            discountPrice: Number 
+        },
     })
 )
 
